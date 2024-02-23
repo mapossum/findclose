@@ -25,6 +25,9 @@
             function populateDropdown(uniqueHouseholds) {
                 var dropdown = $('#household-dropdown');
                 dropdown.empty();
+                // Add empty option as the first option
+                dropdown.append($('<option></option>').attr('value', '').text('-- Select a household --'));
+                // Add other options
                 $.each(uniqueHouseholds, function(i, household) {
                     dropdown.append($('<option></option>').attr('value', household).text(household));
                 });
@@ -47,7 +50,7 @@
                 $.each(filteredFeatures, function(i, feature) {
                     // Format Total_TravelTime to one decimal place
                     var totalTravelTime = feature.properties.Total_TravelTime.toFixed(1);
-                    $('#closest-households').append('<li>' + feature.properties.FROM_Household + ' - Travel(m) : ' + totalTravelTime + '</li>');
+                    $('#closest-households').append('<li>' + feature.properties.FROM_Household + ' - ' + totalTravelTime + '</li>');
                 });
             }
 
@@ -76,10 +79,10 @@
 <body>
     <h2>Select a household:</h2>
     <select id="household-dropdown">
-        <!-- Dropdown options will be populated dynamically -->
+        <!-- Empty option will be displayed by default -->
     </select>
 
-    <h2>Closest households:</h2>
+    <h2>Closest households (minutes):</h2>
     <ul id="closest-households">
         <!-- Closest households will be displayed here -->
     </ul>
