@@ -34,7 +34,7 @@ jQuery(document).ready(function(){
 
                 // Display closest households on webpage (you can modify this part according to your needs)
                 $('#closest-households').empty();
-                $.each(closestHouseholds, function(i, feature) {
+                $.each(filteredFeatures, function(i, feature) {
                     $('#closest-households').append('<li>' + feature.properties.FROM_Household + ' - Total Travel Time: ' + feature.properties.Total_TravelTime + '</li>');
                 });
             }
