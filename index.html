@@ -1,12 +1,25 @@
+<!DOCTYPE html>
 <html>
 <head>
-<title>My Sample</title>
-<script
-  src="https://code.jquery.com/jquery-3.7.1.min.js"
-  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-  crossorigin="anonymous"></script> 
-<script type="text/javascript"> 
-jQuery(document).ready(function(){ 
+    <title>My Sample</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <style>
+        /* Style for dropdown */
+        #household-dropdown {
+            /* Default width */
+            width: 300px; /* Adjust this value according to your needs */
+        }
+
+        /* Media query for phones */
+        @media only screen and (max-width: 600px) {
+            #household-dropdown {
+                /* Set width to 100% for phones */
+                width: 100%;
+            }
+        }
+    </style>
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
 
             // Function to populate dropdown with unique TO_Household values
             function populateDropdown(uniqueHouseholds) {
@@ -29,13 +42,12 @@ jQuery(document).ready(function(){
                     return a.properties.Total_TravelTime - b.properties.Total_TravelTime;
                 });
 
-                // Get the 20 closest households
-                //var closestHouseholds = filteredFeatures.slice(0, 20);
-
-                // Display closest households on webpage (you can modify this part according to your needs)
+                // Display closest households on webpage
                 $('#closest-households').empty();
                 $.each(filteredFeatures, function(i, feature) {
-                    $('#closest-households').append('<li>' + feature.properties.FROM_Household + ' - Total Travel Time: ' + feature.properties.Total_TravelTime + '</li>');
+                    // Format Total_TravelTime to one decimal place
+                    var totalTravelTime = feature.properties.Total_TravelTime.toFixed(1);
+                    $('#closest-households').append('<li>' + feature.properties.FROM_Household + ' - Travel(m) : ' + totalTravelTime + '</li>');
                 });
             }
 
@@ -58,15 +70,15 @@ jQuery(document).ready(function(){
                 console.log("Request Failed: " + err);
             });
 
-});
-</script>
+        });
+    </script>
 </head>
 <body>
     <h2>Select a household:</h2>
     <select id="household-dropdown">
         <!-- Dropdown options will be populated dynamically -->
     </select>
-    
+
     <h2>Closest households:</h2>
     <ul id="closest-households">
         <!-- Closest households will be displayed here -->
