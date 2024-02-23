@@ -30,12 +30,12 @@ jQuery(document).ready(function(){
                 });
 
                 // Get the 20 closest households
-                var closestHouseholds = filteredFeatures.slice(0, 20);
+                //var closestHouseholds = filteredFeatures.slice(0, 20);
 
                 // Display closest households on webpage (you can modify this part according to your needs)
                 $('#closest-households').empty();
                 $.each(closestHouseholds, function(i, feature) {
-                    $('#closest-households').append('<li>' + feature.properties.TO_Household + ' - Total Travel Time: ' + feature.properties.Total_TravelTime + '</li>');
+                    $('#closest-households').append('<li>' + feature.properties.FROM_Household + ' - Total Travel Time: ' + feature.properties.Total_TravelTime + '</li>');
                 });
             }
 
