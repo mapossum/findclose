@@ -7,10 +7,51 @@
   crossorigin="anonymous"></script> 
 <script type="text/javascript"> 
 jQuery(document).ready(function(){ 
-	$.getJSON('PW_Connections.geojson', function(data) {
-                // Data loaded successfully, you can access it through the 'data' variable
-                console.log(data);
-                // Now you can work with the JSON data as needed
+
+            // Function to populate dropdown with unique TO_Household values
+            function populateDropdown(uniqueHouseholds) {
+                var dropdown = $('#household-dropdown');
+                dropdown.empty();
+                $.each(uniqueHouseholds, function(i, household) {
+                    dropdown.append($('<option></option>').attr('value', household).text(household));
+                });
+            }
+
+            // Function to find closest households based on Total_TravelTime
+            function findClosestHouseholds(selectedHousehold, allFeatures) {
+                // Filter features by selected household
+                var filteredFeatures = allFeatures.filter(function(feature) {
+                    return feature.properties.TO_Household === selectedHousehold;
+                });
+
+                // Sort filtered features by Total_TravelTime
+                filteredFeatures.sort(function(a, b) {
+                    return a.properties.Total_TravelTime - b.properties.Total_TravelTime;
+                });
+
+                // Get the 20 closest households
+                var closestHouseholds = filteredFeatures.slice(0, 20);
+
+                // Display closest households on webpage (you can modify this part according to your needs)
+                $('#closest-households').empty();
+                $.each(closestHouseholds, function(i, feature) {
+                    $('#closest-households').append('<li>' + feature.properties.TO_Household + ' - Total Travel Time: ' + feature.properties.Total_TravelTime + '</li>');
+                });
+            }
+
+            // Load GeoJSON data and process it
+            $.getJSON('PW_Connections.geojson', function(data) {
+                // Extract unique TO_Household values
+                var uniqueHouseholds = [...new Set(data.features.map(feature => feature.properties.TO_Household))];
+                // Populate dropdown with unique values
+                populateDropdown(uniqueHouseholds);
+
+                // Event listener for dropdown change
+                $('#household-dropdown').change(function() {
+                    var selectedHousehold = $(this).val();
+                    // Call function to find closest households
+                    findClosestHouseholds(selectedHousehold, data.features);
+                });
             }).fail(function(jqxhr, textStatus, error) {
                 // Error handling in case file loading fails
                 var err = textStatus + ", " + error;
