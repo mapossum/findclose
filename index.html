@@ -6,36 +6,23 @@
   integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
   crossorigin="anonymous"></script> 
 <script type="text/javascript"> 
-var new_num = 40; // global variable
 jQuery(document).ready(function(){ 
-	http://api.jquery.com/css/
-	$('p').css({border: '5px solid red', color: 'green', padding: '20px'});
-	
-	// http://api.jquery.com/bind/
-	// http://api.jquery.com/css/
-	// http://api.jquery.com/text/
-	$('#countme').css({
-		margin: '0 auto',
-		backgroundColor: '#ccc',
-		textAlign: 'center',
-		fontSize: '40px'
-	}).bind('click mousemove', function(){
-		var current = parseInt($(this).text(), 10);
-		new_num = new_num + 1
-		$(this).text(current+1).css({fontSize: new_num+'px'})
-	});
+	$.getJSON('PW_Connections.geojson', function(data) {
+                // Data loaded successfully, you can access it through the 'data' variable
+                console.log(data);
+                // Now you can work with the JSON data as needed
+            }).fail(function(jqxhr, textStatus, error) {
+                // Error handling in case file loading fails
+                var err = textStatus + ", " + error;
+                console.log("Request Failed: " + err);
+            });
+
 });
 </script>
 </head>
 <body>
 
-	<p>Hello</p>
 
-	<p>World</p>
-
-	<div id="countme">0</div>
-
-	<a href="http://api.jquery.com/">Learn more about jQuery's methods</a>
 
 </body>
 </html>
